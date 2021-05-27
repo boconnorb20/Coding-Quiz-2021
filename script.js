@@ -1,5 +1,5 @@
-var startButton = document.querySelector(".start-button ");
-var timerElemet = document.querySelector(".timer-count");
+var startButton = document.querySelector(".start-button");
+var timerElement = document.querySelector(".time");
 
 var timerCount;
 var highScore;
@@ -8,46 +8,60 @@ var questions = document.querySelector("#questions");
 var choices = document.querySelector("#choices");
 var index = 0;
 
+ 
+timerCount = 50;
 
 
-function startQuiz() {
-  timerCount = 50;
+var startTimer = function() {
+  // JS event "timer-event" doesn't exist
+  // timerElement.addEventListener("timer-event", startTimer);
 
+  // put timer count on the page visually
+  timerElement.textContent = timerCount;
+  var timer = setInterval(function() {
+   timerCount--;
+   timerElement.textContent = timerCount;
 
-}
-
-function startTimer() {
-  timer = setInterval(function() {
-  timerCount--;
-  timerElement.quizQuestions = timerCount;
+   // check on time left
+   // check if questions remaining
     if (timerCount >= 0) {
      // NEED TO FIGURE THIS OUT
+     // play next question
     } else if (wrong && timerCount --- 2) {
 
     } if (highScore && timerCount > 0) {
-          clearInterval(timer);
+        clearInterval(timer);
     }
       if (timerCount === 0) {
         clearInterval(timer);
     }
-  }, 50000);
+  }, 1000);
 };
+
+var startGame = function() {
+  startTimer();
+  getQuestions();
+  // doWhateverElseYouNeedAtStart();
+}
+
+startButton.addEventListener('click', startGame);
 
 // building questions and answers
 const quizQuestions = [
     {
        question: "How do call a funcion named myFunction?",
-       choices: [
+       answers: [
             "myfunction",
             "myFunction()",
             "Call myFunction()",
         ],
         correct: "myFunction()",
+      
        
-    },
+    },    
     {
         question: "What is the correct way to write a For loop?",
-        choices: [
+        answers: [
               "for (i <= 5; i++)",
               "For i =0, i => 10: i+",
               "for (i = 0; i <= 5; i++)",
@@ -56,7 +70,7 @@ const quizQuestions = [
      },
      {
         question: "Which tag contains all of the website's visible content",
-        choices: [
+        answers: [
               "<title>",
               "<head>",
               "<body>",
@@ -66,7 +80,7 @@ const quizQuestions = [
      },
      {
         question: "How do you insert a comment in a CSS file",
-        choices: [
+        answers: [
               "/ this is a comment /",
               "// this is a comment //",
               "// this is a comment",
@@ -76,7 +90,7 @@ const quizQuestions = [
      },
      {
         question: "Arrays are used to store what?",
-        choices: [
+        answers: [
               "Arrays are used to store functions",
               "JavaScript arrays are used to store multiple values in a single variable",
               "Arrays can be used to store containers from variables ",
@@ -87,37 +101,52 @@ const quizQuestions = [
     
 ];
 function getQuestions() {
-  var currentQuestion = quizQuestions [index];
+  var currentQuestion = quizQuestions[index];
   questions.textContent = currentQuestion.question
   choices.innerHTML = ""
-  currentQuestion.answers.forEach(function(choice,i){
+  currentQuestion.answers.forEach(function(choice, i){
     var choiceBtn = document.createElement("button")
-    choiceBtn.setAttribute("class","choice")
-    choiceBtn.setAttribute("value",choice)
-    choiceBtn.textContent = i + 1 + "" + choice 
+    choiceBtn.setAttribute("class", "choice")
+    choiceBtn.setAttribute("value", choice)
+    choiceBtn.textContent = i + 1 + ": " + choice 
     choices.appendChild(choiceBtn)
     choiceBtn.onclick = verifyAnswer
   })
 }
 
+// verify selected answer
 function verifyAnswer() {
-  if (this.value !== quizQuestions [index].correct) {
-    timerCount -= 2
+  // if clicked button's 'value' attr does not match correct answer
+  if (this.value !== quizQuestions[index].correct) {
+    // cut off 2 seconds from time
+    timerCount -= 2;
   }
-  index ++
-  if (index === quizQuestions.length) {
-    quizOver () 
 
-  }
-  else {
-    getQuestions()
+  // increment index by 1
+  index++;
+
+  // if index matches length of questions array
+  if (index === quizQuestions.length) {
+    // end quiz
+    quizOver(); 
+  } else {
+    // get next question
+    getQuestions();
   }
 }
 
-
+// ends quiz
 function quizOver() {
-  clearInterval(timerCount)
-  questions.setAttribute("class","hide")
+  // stops timer
+  clearInterval(timerCount);
+  // hides questions element
+  questions.setAttribute("class", "hide");
+  // to change page location
+  // window.location.href('highScoresPage.html');
+
   var endScreen = document.querySelector(".wrapper")
+  // remove class names from endScreen
   endScreen.removeAttribute("class")
+
+  // reset index variable to 0
 }
