@@ -4,7 +4,6 @@ var timerElemet = document.querySelector(".timer-count");
 var timerCount;
 var highScore;
 var correct;
-var wrong;
 var questions = document.querySelector("#questions");
 var choices = document.querySelector("#choices");
 var index = 0;
@@ -14,63 +13,76 @@ var index = 0;
 function startQuiz() {
   timerCount = 50;
 
+
 }
+
+function startTimer() {
+  timer = setInterval(function() {
+  timerCount--;
+  timerElement.quizQuestions = timerCount;
+    if (timerCount >= 0) {
+     // NEED TO FIGURE THIS OUT
+    } else if (wrong && timerCount --- 2) {
+
+    } if (highScore && timerCount > 0) {
+          clearInterval(timer);
+    }
+      if (timerCount === 0) {
+        clearInterval(timer);
+    }
+  }, 50000);
+};
 
 // building questions and answers
 const quizQuestions = [
     {
        question: "How do call a funcion named myFunction?",
-       answers: [
+       choices: [
             "myfunction",
             "myFunction()",
             "Call myFunction()",
-       ],
-       correct: "myFunction()",
+        ],
+        correct: "myFunction()",
        
     },
     {
         question: "What is the correct way to write a For loop?",
-        answers: {
-            a: "for (i <= 5; i++)",
-            b: "For i =0, i => 10: i+",
-            c: "for (i = 0; i <= 5; i++)",
-        },
-        correct: "c",
-        wrong: "a",
-        wrong: "b",
+        choices: [
+              "for (i <= 5; i++)",
+              "For i =0, i => 10: i+",
+              "for (i = 0; i <= 5; i++)",
+        ],
+        correct: "for (i = 0; i <= 5; i++)",
      },
      {
         question: "Which tag contains all of the website's visible content",
-        answers: {
-            a: "<title>",
-            b: "<head>",
-            c: "<body>",
-        },
-        correct: "c",
-        wrong: "a",
-        wrong: "b",
+        choices: [
+              "<title>",
+              "<head>",
+              "<body>",
+        ],
+        correct: "<body>",
+        
      },
      {
         question: "How do you insert a comment in a CSS file",
-        answers: {
-            a: "/ this is a comment /",
-            b: "// this is a comment //",
-            c: "// this is a comment",
-        },
-        correct: "a",
-        wrong: "b",
-        wrong: "c",
+        choices: [
+              "/ this is a comment /",
+              "// this is a comment //",
+              "// this is a comment",
+        ],
+        correct: "this is a comment",
+        
      },
      {
         question: "Arrays are used to store what?",
-        answers: {
-            a: "Arrays are used to store functions",
-            b: "JavaScript arrays are used to store multiple values in a single variable",
-            c: "Arrays can be used to store containers from variables ",
-        },
-        correct: "b",
-        wrong: "c",
-        wrong: "a",
+        choices: [
+              "Arrays are used to store functions",
+              "JavaScript arrays are used to store multiple values in a single variable",
+              "Arrays can be used to store containers from variables ",
+        ],
+        correct: "JavaScript arrays are used to store multiple values in a single variable",
+        
      },
     
 ];
@@ -102,23 +114,7 @@ function verifyAnswer() {
   }
 }
 
-// Timer function/ additional decrement of time for wrong answers
-function startTimer() {
-  timer = setInterval(function() {
-  timerCount--;
-  timerElement.quizQuestions = timerCount;
-    if (timerCount >= 0) {
-     // NEED TO FIGURE THIS OUT
-    } else if (wrong && timerCount --- 2) {
 
-    } if (highScore && timerCount > 0) {
-          clearInterval(timer);
-    }
-      if (timerCount === 0) {
-        clearInterval(timer);
-    }
-  }, 50000);
-};
 function quizOver() {
   clearInterval(timerCount)
   questions.setAttribute("class","hide")
