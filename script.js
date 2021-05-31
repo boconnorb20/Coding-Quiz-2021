@@ -1,63 +1,66 @@
 var startButton = document.querySelector(".start-button");
 var timerElement = document.querySelector(".time");
 
-var timerCount;
+var timerCount=60;
 var highScore;
 var correct;
 var questions = document.querySelector("#questions");
-var choices = document.querySelector("#choices");
+var answers = document.querySelector("#answers");
 var index = 0;
-
+var timer;
  
-timerCount = 50;
+
 
 
 var startTimer = function() {
-  // JS event "timer-event" doesn't exist
-  // timerElement.addEventListener("timer-event", startTimer);
-
+  timerElement.addEventListener("timer-event", startTimer);
+  console.log(timerCount);
   // put timer count on the page visually
   timerElement.textContent = timerCount;
-  var timer = setInterval(function() {
+  timer = setInterval(function() {
    timerCount--;
    timerElement.textContent = timerCount;
-
-   // check on time left
-   // check if questions remaining
-    if (timerCount >= 0) {
-     // NEED TO FIGURE THIS OUT
-     // play next question
-    } else if (wrong && timerCount --- 2) {
-
+    if (timerCount > 0) {
+      // Play next question, Game continues
+    } else {
+      quizOver();
+    
     } if (highScore && timerCount > 0) {
         clearInterval(timer);
     }
-      if (timerCount === 0) {
-        clearInterval(timer);
-    }
+    
   }, 1000);
 };
 
 var startGame = function() {
   startTimer();
   getQuestions();
+  //get answers to appear  
   // doWhateverElseYouNeedAtStart();
 }
 
 startButton.addEventListener('click', startGame);
 
+function getQuestions() {
+  var currentQuestion = quizQuestions[index];
+  questions.textContent = currentQuestion.question
+  answers.innerHTML = ""
+  currentQuestion.answers.forEach(function(choice, i){
+    var choiceBtn = document.createElement("button")
+    choiceBtn.setAttribute("class", "answers")
+    choiceBtn.setAttribute("value", choice)
+    choiceBtn.textContent = i + 1 + ": " + choice 
+    answers.appendChild(choiceBtn)
+    choiceBtn.onclick = verifyAnswer;
+  })
+}
+
 // building questions and answers
 const quizQuestions = [
     {
        question: "How do call a funcion named myFunction?",
-       answers: [
-            "myfunction",
-            "myFunction()",
-            "Call myFunction()",
-        ],
+       answers: ["myfunction", "myFunction()", "Call myFunction()"],
         correct: "myFunction()",
-      
-       
     },    
     {
         question: "What is the correct way to write a For loop?",
@@ -100,19 +103,7 @@ const quizQuestions = [
      },
     
 ];
-function getQuestions() {
-  var currentQuestion = quizQuestions[index];
-  questions.textContent = currentQuestion.question
-  choices.innerHTML = ""
-  currentQuestion.answers.forEach(function(choice, i){
-    var choiceBtn = document.createElement("button")
-    choiceBtn.setAttribute("class", "choice")
-    choiceBtn.setAttribute("value", choice)
-    choiceBtn.textContent = i + 1 + ": " + choice 
-    choices.appendChild(choiceBtn)
-    choiceBtn.onclick = verifyAnswer
-  })
-}
+
 
 // verify selected answer
 function verifyAnswer() {
