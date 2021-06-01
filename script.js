@@ -133,7 +133,7 @@ function quizOver() {
   // hides questions element
   questions.setAttribute("class", "hide");
   // to change page location
-  // window.location.href('highScoresPage.html');
+  window.location.href=('highScoresPage.html');
 
   var endScreen = document.querySelector(".wrapper")
   // remove class names from endScreen
