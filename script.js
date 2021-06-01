@@ -2,7 +2,7 @@ var startButton = document.querySelector(".start-button");
 var timerElement = document.querySelector(".time");
 
 var timerCount=60;
-var highScore;
+var highScore=100;
 var correct;
 var questions = document.querySelector("#questions");
 var answers = document.querySelector("#answers");
@@ -39,6 +39,7 @@ var startGame = function() {
   // doWhateverElseYouNeedAtStart();
 }
 
+// starts quiz
 startButton.addEventListener('click', startGame);
 
 function getQuestions() {
@@ -56,7 +57,7 @@ function getQuestions() {
 }
 
 // building questions and answers
-const quizQuestions = [
+const quizQuestions= [
     {
        question: "How do call a funcion named myFunction?",
        answers: ["myfunction", "myFunction()", "Call myFunction()"],
@@ -140,4 +141,10 @@ function quizOver() {
   endScreen.removeAttribute("class")
 
   // reset index variable to 0
+}
+
+function tallyScore() {
+  var score = localStorage.getItem("score");
+  
+
 }
