@@ -42,10 +42,18 @@ var startGame = function() {
 // starts quiz
 startButton.addEventListener('click', startGame);
 
+/** 
+ * - having trouble figuring out how to calculate scores
+ * - also having issues verifing the correct answer
+ * - need to get verifyAnswer set up
+ * - also the calculation for --2 on wrong answer 
+
+*/
+
 function getQuestions() {
   var currentQuestion = quizQuestions[index];
   questions.textContent = currentQuestion.question
-  answers.innerHTML = ""
+  answers.innerHTML = "answers"
   currentQuestion.answers.forEach(function(choice, i){
     var choiceBtn = document.createElement("button")
     choiceBtn.setAttribute("class", "answers")
@@ -100,13 +108,19 @@ const quizQuestions= [
               "Arrays can be used to store containers from variables ",
         ],
         correct: "JavaScript arrays are used to store multiple values in a single variable",
-        
+       
      },
     
 ];
 
 
-// verify selected answer
+/** 
+ * - verify selected answer
+ * - having problems setting up the verifyAnswer function
+ * - 
+ * 
+*/
+
 function verifyAnswer() {
   // if clicked button's 'value' attr does not match correct answer
   if (this.value !== quizQuestions[index].correct) {
@@ -135,7 +149,6 @@ function quizOver() {
   questions.setAttribute("class", "hide");
   // to change page location
   window.location.href=('highScoresPage.html');
-
   var endScreen = document.querySelector(".wrapper")
   // remove class names from endScreen
   endScreen.removeAttribute("class")
